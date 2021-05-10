@@ -1,0 +1,2184 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Assignment 3 - Applying meta-analytic priors},
+  pdfauthor={Riccardo Fusaroli},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Assignment 3 - Applying meta-analytic priors}
+\author{Riccardo Fusaroli}
+\date{}
+
+\begin{document}
+\maketitle
+
+\hypertarget{assignment-3}{%
+\subsection{Assignment 3}\label{assignment-3}}
+
+In this assignment we do the following: - we run a Bayesian
+meta-analysis of pitch variability in ASD, based on previously published
+literature - we analyze pitch variability in ASD in two new studies
+using both a conservative and a meta-analytic prior - we assess the
+difference in model quality and estimates using the two priors.
+
+The questions you need to answer are: What are the consequences of using
+a meta-analytic prior? Evaluate the models with conservative and
+meta-analytic priors. Discuss the effects on estimates. Discuss the
+effects on model quality. Discuss the role that meta-analytic priors
+should have in scientific practice. Should we systematically use them?
+Do they have drawbacks? Should we use them to complement more
+conservative approaches? How does the use of meta-analytic priors you
+suggest reflect the skeptical and cumulative nature of science?
+
+\hypertarget{step-by-step-suggestions}{%
+\subsubsection{Step by step
+suggestions}\label{step-by-step-suggestions}}
+
+\#\#\#\#Step 1: Perform a meta-analysis of pitch variability from
+previous studies of voice in ASD - N.B. all you need is in the two intro
+videos - the data is available as Ass3\_MetaAnalysisData.tsv
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#We load the Meta Analysis Data that were provided into R}
+\NormalTok{meta }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\AttributeTok{file =} \StringTok{\textquotesingle{}Ass3\_MetaAnalysisData.tsv\textquotesingle{}}\NormalTok{, }\AttributeTok{sep =} \StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}t}\StringTok{\textquotesingle{}}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  You should calculate Effect size (cohen's d) and Standard Error
+  (uncertainty in the Cohen's d) per each study, using escalc() from the
+  metafor package (also check the livecoding intro)
+\item
+  N.B. for the purpose of the assignment we're only interested in
+  getting a meta-analytic effect size for the meta-analytic prior (and
+  not e.g.~all the stuff on publication bias). See a brms tutorial here:
+  \url{https://vuorre.netlify.com/post/2016/09/29/meta-analysis-is-a-special-case-of-bayesian-multilevel-modeling/}
+  The formula is EffectSize \textbar{} se(StandardError)
+  \textasciitilde{} 1 + (1 \textbar{} Paper). Don't forget prior
+  definition, model checking, etc.
+\item
+  N.B. the livecoding video is not perfect, you \emph{can} (but don't
+  have to) improve it: use a t-student likelihood, test the effects of
+  the priors and refine them, check the robustness of results to more or
+  less skeptical priors, etc.
+\item
+  Write down the results of the meta-analysis in terms of a prior for
+  step 2.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Morten}
+
+\CommentTok{\#We load the Meta Analysis Data that were provided into R}
+\NormalTok{meta }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\AttributeTok{file =} \StringTok{\textquotesingle{}Ass3\_MetaAnalysisData.tsv\textquotesingle{}}\NormalTok{, }\AttributeTok{sep =} \StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}t}\StringTok{\textquotesingle{}}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Make variables numeric}
+\NormalTok{meta }\OtherTok{\textless{}{-}}\NormalTok{ meta }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{PitchVariabilityASD\_Mean =} \FunctionTok{as.numeric}\NormalTok{(PitchVariabilityASD\_Mean),}
+    \AttributeTok{PitchVariabilityTD\_Mean =} \FunctionTok{as.numeric}\NormalTok{(PitchVariabilityTD\_Mean),}
+    \AttributeTok{PitchVariabilityASD\_SD =} \FunctionTok{as.numeric}\NormalTok{(PitchVariabilityASD\_SD),}
+    \AttributeTok{PitchVariabilityTD\_SD =} \FunctionTok{as.numeric}\NormalTok{(PitchVariabilityTD\_SD)}
+\NormalTok{  )}
+
+\CommentTok{\# Remove rows with NA in paper}
+\NormalTok{meta }\OtherTok{\textless{}{-}}\NormalTok{ meta }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{subset}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Paper))}
+
+\CommentTok{\# Calculating effect size and standard error per study, SMD = Standardized Mean Difference, n1i and n2i are group sizes, m1i and m2i are means of groups, sd1i and sd2i are standard deviation of groups}
+\NormalTok{meta }\OtherTok{\textless{}{-}} \FunctionTok{escalc}\NormalTok{(}\AttributeTok{measure =} \StringTok{\textquotesingle{}SMD\textquotesingle{}}\NormalTok{, }
+                      \AttributeTok{n1i =}\NormalTok{ TD\_N, }
+                      \AttributeTok{n2i =}\NormalTok{ ASD\_N,}
+                      \AttributeTok{m1i =}\NormalTok{ PitchVariabilityTD\_Mean, }
+                      \AttributeTok{m2i =}\NormalTok{ PitchVariabilityASD\_Mean, }
+                      \AttributeTok{sd1i =}\NormalTok{ PitchVariabilityTD\_SD, }
+                      \AttributeTok{sd2i =}\NormalTok{ PitchVariabilityASD\_SD, }
+                      \AttributeTok{data =}\NormalTok{ meta,}
+                      \AttributeTok{slab =}\NormalTok{ Paper)}
+
+\CommentTok{\# renaming to effect size and standard error}
+\NormalTok{meta }\OtherTok{\textless{}{-}}\NormalTok{ meta }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}
+  \AttributeTok{StandardError =} \FunctionTok{sqrt}\NormalTok{(vi)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}
+  \AttributeTok{EffectSize =}\NormalTok{ yi}
+\NormalTok{)}
+
+\CommentTok{\#Nicoline}
+\CommentTok{\# checking effect size and standard error}
+\FunctionTok{summary}\NormalTok{(meta}\SpecialCharTok{$}\NormalTok{EffectSize)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+## -1.29110 -0.81658 -0.65338 -0.46315 -0.05907  0.52031       17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(meta}\SpecialCharTok{$}\NormalTok{StandardError)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##  0.2211  0.3176  0.3732  0.3673  0.4243  0.4826      17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# creating formula for model for effect size with population as random intercept}
+\NormalTok{meta\_f }\OtherTok{\textless{}{-}} \FunctionTok{bf}\NormalTok{(EffectSize }\SpecialCharTok{|} \FunctionTok{se}\NormalTok{(StandardError) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ Population))}
+
+\CommentTok{\# get priors for model}
+\FunctionTok{get\_prior}\NormalTok{(meta\_f, }\AttributeTok{data =}\NormalTok{ meta, }\AttributeTok{family =} \FunctionTok{gaussian}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Rows containing NAs were excluded from the model.
+\end{verbatim}
+
+\begin{verbatim}
+##                    prior     class      coef      group resp dpar nlpar bound
+##  student_t(3, -0.7, 2.5) Intercept                                           
+##     student_t(3, 0, 2.5)        sd                                           
+##     student_t(3, 0, 2.5)        sd           Population                      
+##     student_t(3, 0, 2.5)        sd Intercept Population                      
+##        source
+##       default
+##       default
+##  (vectorized)
+##  (vectorized)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# make priors}
+\NormalTok{meta\_prior }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{class =}\NormalTok{ Intercept),}
+  \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.3}\NormalTok{), }\AttributeTok{class =}\NormalTok{ sd)}
+\NormalTok{)}
+
+\CommentTok{\# run model with above formula and priors without using data}
+\NormalTok{meta\_m0 }\OtherTok{\textless{}{-}} \FunctionTok{brm}\NormalTok{(}
+\NormalTok{  meta\_f,}
+  \AttributeTok{data =}\NormalTok{ meta,}
+  \AttributeTok{family =} \FunctionTok{gaussian}\NormalTok{(),}
+  \AttributeTok{prior =}\NormalTok{ meta\_prior,}
+  \AttributeTok{sample\_prior =} \StringTok{"only"}\NormalTok{,}
+  \AttributeTok{chains =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{cores =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{backend =} \StringTok{"cmdstanr"}\NormalTok{,}
+  \AttributeTok{threads =} \FunctionTok{threading}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Rows containing NAs were excluded from the model.
+\end{verbatim}
+
+\begin{verbatim}
+## Compiling Stan program...
+\end{verbatim}
+
+\begin{verbatim}
+## In file included from stan/lib/stan_math/stan/math/rev/functor.hpp:28,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math/rev.hpp:11,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math.hpp:19,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/src/stan/model/model_header.hpp:4,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c28cd5254.hpp:3:
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(size_t, size_t, double*, VecT&&, ArgsT&& ...) [with VecT = const std::vector<int>&; ArgsT = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; ReduceFunction = file206c167e1c31_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; size_t = long long unsigned int]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:248:23:   required from 'stan::math::var stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::operator()(Vec&&, bool, int, std::ostream*, Args&& ...) const [with ReduceFunction = file206c167e1c31_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type = void; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/prim/functor/reduce_sum.hpp:207:46:   required from 'auto stan::math::reduce_sum(Vec&&, int, std::ostream*, Args&& ...) [with ReduceFunction = file206c167e1c31_model_namespace::partial_log_lik_rsfunctor__; Vec = const std::vector<int>&; <template-parameter-1-3> = void; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c28cd5254.hpp:562:52:   required from 'stan::scalar_type_t<T2> file206c167e1c31_model_namespace::file206c167e1c31_model::log_prob_impl(VecR&, VecI&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; VecR = Eigen::Matrix<stan::math::var_value<double>, -1, 1>; VecI = Eigen::Matrix<int, -1, 1>; stan::require_vector_like_t<VecR>* <anonymous> = 0; stan::require_vector_like_vt<std::is_integral, VecI>* <anonymous> = 0; stan::scalar_type_t<T2> = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c28cd5254.hpp:896:77:   required from 'T_ file206c167e1c31_model_namespace::file206c167e1c31_model::log_prob(Eigen::Matrix<T_job_param, -1, 1>&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; T_ = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:96:77:   required from 'stan::math::var stan::model::model_base_crtp<M>::log_prob(Eigen::Matrix<stan::math::var_value<double>, -1, 1>&, std::ostream*) const [with M = file206c167e1c31_model_namespace::file206c167e1c31_model; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:93:20:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c167e1c31_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c167e1c31_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:62:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(size_t num_vars_per_term, size_t num_vars_shared_terms,
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer&, tbb::split) [with ReduceFunction = file206c167e1c31_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:183:27:   required from 'tbb::task* tbb::interface9::internal::start_reduce<Range, Body, Partitioner>::execute() [with Range = tbb::blocked_range<long long unsigned int>; Body = stan::math::internal::reduce_sum_impl<file206c167e1c31_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer; Partitioner = const tbb::auto_partitioner]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:178:11:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c167e1c31_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c167e1c31_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:77:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(recursive_reducer& other, tbb::split)
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## Start sampling
+\end{verbatim}
+
+\begin{verbatim}
+## Running MCMC with 2 parallel chains, with 2 thread(s) per chain...
+## 
+## Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 1 finished in 0.2 seconds.
+## Chain 2 finished in 0.2 seconds.
+## 
+## Both chains finished successfully.
+## Mean chain execution time: 0.2 seconds.
+## Total execution time: 0.4 seconds.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# prior predictive check}
+\FunctionTok{pp\_check}\NormalTok{(meta\_m0, }\AttributeTok{nsamples =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# running same model, this time using data}
+\NormalTok{meta\_m1 }\OtherTok{\textless{}{-}} \FunctionTok{brm}\NormalTok{(}
+\NormalTok{  meta\_f,}
+  \AttributeTok{data =}\NormalTok{ meta,}
+  \AttributeTok{family =} \FunctionTok{gaussian}\NormalTok{(),}
+  \AttributeTok{prior =}\NormalTok{ meta\_prior,}
+  \AttributeTok{sample\_prior =}\NormalTok{ T,}
+  \AttributeTok{chains =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{cores =} \DecValTok{2}\NormalTok{, }
+  \AttributeTok{backend =} \StringTok{"cmdstanr"}\NormalTok{,}
+  \AttributeTok{threads =} \FunctionTok{threading}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Rows containing NAs were excluded from the model.
+\end{verbatim}
+
+\begin{verbatim}
+## Compiling Stan program...
+\end{verbatim}
+
+\begin{verbatim}
+## In file included from stan/lib/stan_math/stan/math/rev/functor.hpp:28,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math/rev.hpp:11,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math.hpp:19,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/src/stan/model/model_header.hpp:4,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c5e0d2d4c.hpp:3:
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(size_t, size_t, double*, VecT&&, ArgsT&& ...) [with VecT = const std::vector<int>&; ArgsT = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; ReduceFunction = file206c1eb27870_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; size_t = long long unsigned int]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:248:23:   required from 'stan::math::var stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::operator()(Vec&&, bool, int, std::ostream*, Args&& ...) const [with ReduceFunction = file206c1eb27870_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type = void; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/prim/functor/reduce_sum.hpp:207:46:   required from 'auto stan::math::reduce_sum(Vec&&, int, std::ostream*, Args&& ...) [with ReduceFunction = file206c1eb27870_model_namespace::partial_log_lik_rsfunctor__; Vec = const std::vector<int>&; <template-parameter-1-3> = void; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c5e0d2d4c.hpp:567:52:   required from 'stan::scalar_type_t<T2> file206c1eb27870_model_namespace::file206c1eb27870_model::log_prob_impl(VecR&, VecI&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; VecR = Eigen::Matrix<stan::math::var_value<double>, -1, 1>; VecI = Eigen::Matrix<int, -1, 1>; stan::require_vector_like_t<VecR>* <anonymous> = 0; stan::require_vector_like_vt<std::is_integral, VecI>* <anonymous> = 0; stan::scalar_type_t<T2> = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c5e0d2d4c.hpp:928:77:   required from 'T_ file206c1eb27870_model_namespace::file206c1eb27870_model::log_prob(Eigen::Matrix<T_job_param, -1, 1>&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; T_ = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:96:77:   required from 'stan::math::var stan::model::model_base_crtp<M>::log_prob(Eigen::Matrix<stan::math::var_value<double>, -1, 1>&, std::ostream*) const [with M = file206c1eb27870_model_namespace::file206c1eb27870_model; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:93:20:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c1eb27870_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c1eb27870_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:62:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(size_t num_vars_per_term, size_t num_vars_shared_terms,
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer&, tbb::split) [with ReduceFunction = file206c1eb27870_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:183:27:   required from 'tbb::task* tbb::interface9::internal::start_reduce<Range, Body, Partitioner>::execute() [with Range = tbb::blocked_range<long long unsigned int>; Body = stan::math::internal::reduce_sum_impl<file206c1eb27870_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer; Partitioner = const tbb::auto_partitioner]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:178:11:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c1eb27870_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c1eb27870_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:77:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(recursive_reducer& other, tbb::split)
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## Start sampling
+\end{verbatim}
+
+\begin{verbatim}
+## Running MCMC with 2 parallel chains, with 2 thread(s) per chain...
+## 
+## Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 1 finished in 0.4 seconds.
+## Chain 2 finished in 0.4 seconds.
+## 
+## Both chains finished successfully.
+## Mean chain execution time: 0.4 seconds.
+## Total execution time: 0.5 seconds.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# posterior predictive check}
+\FunctionTok{pp\_check}\NormalTok{(meta\_m1, }\AttributeTok{nsamples =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-2-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# checking model}
+\FunctionTok{summary}\NormalTok{(meta\_m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: EffectSize | se(StandardError) ~ 1 + (1 | Population) 
+##    Data: meta (Number of observations: 30) 
+## Samples: 2 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 2000
+## 
+## Group-Level Effects: 
+## ~Population (Number of levels: 26) 
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)     0.32      0.10     0.10     0.52 1.00      613      603
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept    -0.44      0.10    -0.64    -0.26 1.00     1314      866
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma     0.00      0.00     0.00     0.00 1.00     2000     2000
+## 
+## Samples were drawn using sample(hmc). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# MA effect mean = 0.43, sd = 0.1}
+\CommentTok{\# saving meta mean, meta standard error and meta effect size}
+\NormalTok{meta\_mean }\OtherTok{\textless{}{-}} \FunctionTok{fixef}\NormalTok{(meta\_m1)[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{meta\_error }\OtherTok{\textless{}{-}} \FunctionTok{fixef}\NormalTok{(meta\_m1)[[}\DecValTok{2}\NormalTok{]]}
+\NormalTok{meta\_effectsize }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{32}
+
+\NormalTok{meta\_heterogeneity }\OtherTok{=} \FunctionTok{ranef}\NormalTok{(meta\_m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\#\#\#\#Step 2: Analyse pitch variability in ASD in two new studies for
+which you have access to all the trials (not just study level estimates)
+- the data is available as Ass3\_data.csv. Notice there are 2 studies
+(language us, and language dk), multiple trials per participant, and a
+few different ways to measure pitch variability (if in doubt, focus on
+pitch IQR, interquartile range of the log of fundamental frequency)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#We load the data from the two new studies into R}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"Ass3\_data.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   .default = col_double(),
+##   Language = col_character(),
+##   Diagnosis = col_character(),
+##   Gender = col_character(),
+##   AdosCommunication = col_character(),
+##   AdosSocial = col_character(),
+##   AdosCreativity = col_character(),
+##   AdosStereotyped = col_character(),
+##   language = col_character()
+## )
+## i Use `spec()` for the full column specifications.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 32 parsing failures.
+##  row col expected actual            file
+## 1043  ID a double    ALY 'Ass3_data.csv'
+## 1044  ID a double    ALY 'Ass3_data.csv'
+## 1045  ID a double    ALY 'Ass3_data.csv'
+## 1046  ID a double    ANS 'Ass3_data.csv'
+## 1047  ID a double    ANS 'Ass3_data.csv'
+## .... ... ........ ...... ...............
+## See problems(...) for more details.
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Also, let's standardize the data, so that they are compatible with our
+  meta-analytic prior (Cohen's d is measured in SDs).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Magnus}
+\CommentTok{\# Standardizing pitch IQE}
+\NormalTok{data}\SpecialCharTok{$}\NormalTok{Pitch\_IQR\_stan }\OtherTok{\textless{}{-}}\NormalTok{ (data}\SpecialCharTok{$}\NormalTok{Pitch\_IQR }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Pitch\_IQR))}\SpecialCharTok{/}\FunctionTok{sd}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Pitch\_IQR)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Is there any structure in the dataset that we should account for with
+  random/varying effects? How would you implement that? Or, if you don't
+  know how to do bayesian random/varying effects or don't want to
+  bother, is there anything we would need to simplify in the dataset?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Magnus}
+\CommentTok{\# creating subset with only asd}
+\NormalTok{asd }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{subset}\NormalTok{(Diagnosis }\SpecialCharTok{==} \StringTok{\textquotesingle{}ASD\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# creating subset with only td}
+\NormalTok{td }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{subset}\NormalTok{(Diagnosis }\SpecialCharTok{==} \StringTok{\textquotesingle{}TD\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# checking mean duration for both groups}
+\FunctionTok{mean}\NormalTok{(asd}\SpecialCharTok{$}\NormalTok{Duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20.33454
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(td}\SpecialCharTok{$}\NormalTok{Duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 17.20774
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# checking mean speechrate for both groups}
+\FunctionTok{mean}\NormalTok{(asd}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{speechrate (nsyll/dur)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.048441
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(td}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{speechrate (nsyll/dur)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.267273
+\end{verbatim}
+
+\#\#\#\#Step 3: Build a regression model predicting Pitch variability
+from Diagnosis. - how is the outcome distributed? (likelihood function).
+NB. given we are standardizing, and the meta-analysis is on that scale,
+gaussian is not a bad assumption, but check t-student as well. Lognormal
+would require us to convert the prior to that scale. - how are the
+parameters of the likelihood distribution distributed? Which predictors
+should they be conditioned on? Start simple, with Diagnosis only. Add
+other predictors only if you have the time and energy! - use a
+skeptical/conservative prior for the effects of diagnosis. Remember
+you'll need to motivate it, test its predictions (prior predictive
+checks), its impact on the posteriors (prior posterior updates checks).
+- Evaluate model quality. Describe and plot the estimates.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Astrid}
+
+\CommentTok{\# making formulas for models with and without language as fixed effect}
+\NormalTok{iqr\_m0 }\OtherTok{\textless{}{-}} \FunctionTok{bf}\NormalTok{(Pitch\_IQR\_stan }\SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ Diagnosis }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ ID))}
+\NormalTok{iqr\_m1 }\OtherTok{\textless{}{-}} \FunctionTok{bf}\NormalTok{(Pitch\_IQR\_stan }\SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ Diagnosis }\SpecialCharTok{+}\NormalTok{ Language }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ ID))}
+
+\CommentTok{\# getting priors for both}
+\FunctionTok{get\_prior}\NormalTok{(iqr\_m0, data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Rows containing NAs were excluded from the model.
+\end{verbatim}
+
+\begin{verbatim}
+##                    prior     class        coef group resp dpar nlpar bound
+##                   (flat)         b                                        
+##                   (flat)         b DiagnosisTD                            
+##  student_t(3, -0.2, 2.5) Intercept                                        
+##     student_t(3, 0, 2.5)        sd                                        
+##     student_t(3, 0, 2.5)        sd                ID                      
+##     student_t(3, 0, 2.5)        sd   Intercept    ID                      
+##     student_t(3, 0, 2.5)     sigma                                        
+##        source
+##       default
+##  (vectorized)
+##       default
+##       default
+##  (vectorized)
+##  (vectorized)
+##       default
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{get\_prior}\NormalTok{(iqr\_m1, data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Rows containing NAs were excluded from the model.
+\end{verbatim}
+
+\begin{verbatim}
+##                    prior     class        coef group resp dpar nlpar bound
+##                   (flat)         b                                        
+##                   (flat)         b DiagnosisTD                            
+##                   (flat)         b  Languageus                            
+##  student_t(3, -0.2, 2.5) Intercept                                        
+##     student_t(3, 0, 2.5)        sd                                        
+##     student_t(3, 0, 2.5)        sd                ID                      
+##     student_t(3, 0, 2.5)        sd   Intercept    ID                      
+##     student_t(3, 0, 2.5)     sigma                                        
+##        source
+##       default
+##  (vectorized)
+##  (vectorized)
+##       default
+##       default
+##  (vectorized)
+##  (vectorized)
+##       default
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# making priors for model without}
+\NormalTok{m0\_pri }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.1}\NormalTok{), }\AttributeTok{class =}\NormalTok{ Intercept),}
+  \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{), }\AttributeTok{class =}\NormalTok{ sigma),}
+  \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.13}\NormalTok{), }\AttributeTok{class =}\NormalTok{ b, }\AttributeTok{coef =}\NormalTok{ DiagnosisTD),}
+  \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, .}\DecValTok{1}\NormalTok{), }\AttributeTok{class =}\NormalTok{ sd)}
+\NormalTok{)}
+
+\CommentTok{\# runnign model without language sampling from priors only}
+\NormalTok{iqr\_m0\_spo }\OtherTok{\textless{}{-}} \FunctionTok{brm}\NormalTok{(}
+  \AttributeTok{formula =}\NormalTok{ iqr\_m0,}
+  \AttributeTok{data =}\NormalTok{ data,}
+  \AttributeTok{family =}\NormalTok{ gaussian,}
+  \AttributeTok{prior =}\NormalTok{ m0\_pri,}
+  \AttributeTok{sample\_prior=}\StringTok{"only"}\NormalTok{,}
+  \AttributeTok{chains =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{cores =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{backend =} \StringTok{"cmdstanr"}\NormalTok{,}
+  \AttributeTok{threads =} \FunctionTok{threading}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Rows containing NAs were excluded from the model.
+\end{verbatim}
+
+\begin{verbatim}
+## Compiling Stan program...
+\end{verbatim}
+
+\begin{verbatim}
+## In file included from stan/lib/stan_math/stan/math/rev/functor.hpp:28,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math/rev.hpp:11,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math.hpp:19,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/src/stan/model/model_header.hpp:4,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c18e52bbb.hpp:3:
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(size_t, size_t, double*, VecT&&, ArgsT&& ...) [with VecT = const std::vector<int>&; ArgsT = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; ReduceFunction = file206c1b821b27_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; size_t = long long unsigned int]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:248:23:   required from 'stan::math::var stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::operator()(Vec&&, bool, int, std::ostream*, Args&& ...) const [with ReduceFunction = file206c1b821b27_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type = void; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/prim/functor/reduce_sum.hpp:207:46:   required from 'auto stan::math::reduce_sum(Vec&&, int, std::ostream*, Args&& ...) [with ReduceFunction = file206c1b821b27_model_namespace::partial_log_lik_rsfunctor__; Vec = const std::vector<int>&; <template-parameter-1-3> = void; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c18e52bbb.hpp:627:52:   required from 'stan::scalar_type_t<T2> file206c1b821b27_model_namespace::file206c1b821b27_model::log_prob_impl(VecR&, VecI&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; VecR = Eigen::Matrix<stan::math::var_value<double>, -1, 1>; VecI = Eigen::Matrix<int, -1, 1>; stan::require_vector_like_t<VecR>* <anonymous> = 0; stan::require_vector_like_vt<std::is_integral, VecI>* <anonymous> = 0; stan::scalar_type_t<T2> = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c18e52bbb.hpp:1016:77:   required from 'T_ file206c1b821b27_model_namespace::file206c1b821b27_model::log_prob(Eigen::Matrix<T_job_param, -1, 1>&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; T_ = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:96:77:   required from 'stan::math::var stan::model::model_base_crtp<M>::log_prob(Eigen::Matrix<stan::math::var_value<double>, -1, 1>&, std::ostream*) const [with M = file206c1b821b27_model_namespace::file206c1b821b27_model; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:93:20:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c1b821b27_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c1b821b27_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:62:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(size_t num_vars_per_term, size_t num_vars_shared_terms,
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer&, tbb::split) [with ReduceFunction = file206c1b821b27_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:183:27:   required from 'tbb::task* tbb::interface9::internal::start_reduce<Range, Body, Partitioner>::execute() [with Range = tbb::blocked_range<long long unsigned int>; Body = stan::math::internal::reduce_sum_impl<file206c1b821b27_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer; Partitioner = const tbb::auto_partitioner]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:178:11:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c1b821b27_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c1b821b27_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:77:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(recursive_reducer& other, tbb::split)
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## Start sampling
+\end{verbatim}
+
+\begin{verbatim}
+## Running MCMC with 2 parallel chains, with 2 thread(s) per chain...
+## 
+## Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 1 finished in 0.7 seconds.
+## Chain 2 finished in 0.7 seconds.
+## 
+## Both chains finished successfully.
+## Mean chain execution time: 0.7 seconds.
+## Total execution time: 0.8 seconds.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# prior predictive check}
+\FunctionTok{pp\_check}\NormalTok{(iqr\_m0\_spo, }\AttributeTok{nsample =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# running model now including data}
+\NormalTok{iqr\_m0\_spt }\OtherTok{\textless{}{-}} \FunctionTok{brm}\NormalTok{(}
+  \AttributeTok{formula =}\NormalTok{ iqr\_m0,}
+  \AttributeTok{data =}\NormalTok{ data,}
+  \AttributeTok{family =}\NormalTok{ gaussian,}
+  \AttributeTok{prior =}\NormalTok{ m0\_pri,}
+  \AttributeTok{sample\_prior=}\NormalTok{T,}
+  \AttributeTok{chains =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{cores =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{backend =} \StringTok{"cmdstanr"}\NormalTok{,}
+  \AttributeTok{threads =} \FunctionTok{threading}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Rows containing NAs were excluded from the model.
+\end{verbatim}
+
+\begin{verbatim}
+## Compiling Stan program...
+\end{verbatim}
+
+\begin{verbatim}
+## In file included from stan/lib/stan_math/stan/math/rev/functor.hpp:28,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math/rev.hpp:11,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math.hpp:19,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/src/stan/model/model_header.hpp:4,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c79d3f11.hpp:3:
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(size_t, size_t, double*, VecT&&, ArgsT&& ...) [with VecT = const std::vector<int>&; ArgsT = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; ReduceFunction = file206c30f84a1_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; size_t = long long unsigned int]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:248:23:   required from 'stan::math::var stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::operator()(Vec&&, bool, int, std::ostream*, Args&& ...) const [with ReduceFunction = file206c30f84a1_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type = void; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/prim/functor/reduce_sum.hpp:207:46:   required from 'auto stan::math::reduce_sum(Vec&&, int, std::ostream*, Args&& ...) [with ReduceFunction = file206c30f84a1_model_namespace::partial_log_lik_rsfunctor__; Vec = const std::vector<int>&; <template-parameter-1-3> = void; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c79d3f11.hpp:637:52:   required from 'stan::scalar_type_t<T2> file206c30f84a1_model_namespace::file206c30f84a1_model::log_prob_impl(VecR&, VecI&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; VecR = Eigen::Matrix<stan::math::var_value<double>, -1, 1>; VecI = Eigen::Matrix<int, -1, 1>; stan::require_vector_like_t<VecR>* <anonymous> = 0; stan::require_vector_like_vt<std::is_integral, VecI>* <anonymous> = 0; stan::scalar_type_t<T2> = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c79d3f11.hpp:1080:77:   required from 'T_ file206c30f84a1_model_namespace::file206c30f84a1_model::log_prob(Eigen::Matrix<T_job_param, -1, 1>&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; T_ = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:96:77:   required from 'stan::math::var stan::model::model_base_crtp<M>::log_prob(Eigen::Matrix<stan::math::var_value<double>, -1, 1>&, std::ostream*) const [with M = file206c30f84a1_model_namespace::file206c30f84a1_model; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:93:20:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c30f84a1_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c30f84a1_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:62:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(size_t num_vars_per_term, size_t num_vars_shared_terms,
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer&, tbb::split) [with ReduceFunction = file206c30f84a1_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:183:27:   required from 'tbb::task* tbb::interface9::internal::start_reduce<Range, Body, Partitioner>::execute() [with Range = tbb::blocked_range<long long unsigned int>; Body = stan::math::internal::reduce_sum_impl<file206c30f84a1_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer; Partitioner = const tbb::auto_partitioner]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:178:11:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c30f84a1_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c30f84a1_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:77:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(recursive_reducer& other, tbb::split)
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## Start sampling
+\end{verbatim}
+
+\begin{verbatim}
+## Running MCMC with 2 parallel chains, with 2 thread(s) per chain...
+## 
+## Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 1 finished in 2.5 seconds.
+## Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 2 finished in 2.6 seconds.
+## 
+## Both chains finished successfully.
+## Mean chain execution time: 2.5 seconds.
+## Total execution time: 2.8 seconds.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# posterior predictive check}
+\FunctionTok{pp\_check}\NormalTok{(iqr\_m0\_spt, }\AttributeTok{nsample =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# checking effect of diagnosis}
+\FunctionTok{hypothesis}\NormalTok{(iqr\_m0\_spt, }\StringTok{"DiagnosisTD \textless{} 0"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Hypothesis Tests for class b:
+##          Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob
+## 1 (DiagnosisTD) < 0    -0.13      0.09    -0.27     0.02      11.66      0.92
+##   Star
+## 1     
+## ---
+## 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
+## '*': For one-sided hypotheses, the posterior probability exceeds 95%;
+## for two-sided hypotheses, the value tested against lies outside the 95%-CI.
+## Posterior probabilities of point hypotheses assume equal prior probabilities.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{hypothesis}\NormalTok{(iqr\_m0\_spt, }\StringTok{"DiagnosisTD \textless{} 0"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-6-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# summary of model}
+\FunctionTok{summary}\NormalTok{(iqr\_m0\_spt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: Pitch_IQR_stan ~ 1 + Diagnosis + (1 | ID) 
+##    Data: data (Number of observations: 1042) 
+## Samples: 2 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 2000
+## 
+## Group-Level Effects: 
+## ~ID (Number of levels: 140) 
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)     0.63      0.04     0.56     0.70 1.00      655     1021
+## 
+## Population-Level Effects: 
+##             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept       0.20      0.07     0.06     0.33 1.00      764     1140
+## DiagnosisTD    -0.13      0.09    -0.30     0.05 1.00      996     1222
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma     0.71      0.02     0.68     0.75 1.00     2417     1667
+## 
+## Samples were drawn using sample(hmc). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).
+\end{verbatim}
+
+\#\#\#\#Step 4: Now re-run the model with the meta-analytic prior -
+Evaluate model quality. Describe and plot the estimates. - N.B. you need
+to assess the meta-analytic informed prior (prior pred checks,
+prior-posterior update checks) and if relevant you can always change it
+in motivated ways (e.g.~too confident, doesn't let the model actually
+learn from the data, so increase sd)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Tobias}
+\CommentTok{\# getting mean, effect size and standard error for meta priors}
+\NormalTok{meta\_mean}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.4394258
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{meta\_error}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.09740861
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{meta\_effectsize}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.32
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# making meta priors}
+\NormalTok{meta\_pri }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.1}\NormalTok{), }\AttributeTok{class =}\NormalTok{ Intercept),}
+  \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(.}\DecValTok{32}\NormalTok{, }\FloatTok{0.5}\NormalTok{), }\AttributeTok{class =}\NormalTok{ sigma), }\CommentTok{\# corresponds to the effect size from meta analysis}
+  \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.436}\NormalTok{, }\FloatTok{0.09}\NormalTok{), }\AttributeTok{class =}\NormalTok{ b, }\AttributeTok{coef =}\NormalTok{ DiagnosisTD), }\CommentTok{\# corresponds to mean and standard error from meta analysis}
+  \FunctionTok{prior}\NormalTok{(}\FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, .}\DecValTok{1}\NormalTok{), }\AttributeTok{class =}\NormalTok{ sd)}
+\NormalTok{)}
+
+\CommentTok{\# run model with meta priors}
+\NormalTok{iqr\_meta\_spo }\OtherTok{\textless{}{-}} \FunctionTok{brm}\NormalTok{(}
+  \AttributeTok{formula =}\NormalTok{ iqr\_m0,}
+  \AttributeTok{data =}\NormalTok{ data,}
+  \AttributeTok{family =}\NormalTok{ gaussian,}
+  \AttributeTok{prior =}\NormalTok{ meta\_pri,}
+  \AttributeTok{sample\_prior =} \StringTok{"only"}\NormalTok{,}
+  \AttributeTok{chains =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{cores =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{backend =} \StringTok{"cmdstanr"}\NormalTok{,}
+  \AttributeTok{threads =} \FunctionTok{threading}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Rows containing NAs were excluded from the model.
+\end{verbatim}
+
+\begin{verbatim}
+## Compiling Stan program...
+\end{verbatim}
+
+\begin{verbatim}
+## In file included from stan/lib/stan_math/stan/math/rev/functor.hpp:28,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math/rev.hpp:11,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math.hpp:19,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/src/stan/model/model_header.hpp:4,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c403d30c4.hpp:3:
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(size_t, size_t, double*, VecT&&, ArgsT&& ...) [with VecT = const std::vector<int>&; ArgsT = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; ReduceFunction = file206c10244950_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; size_t = long long unsigned int]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:248:23:   required from 'stan::math::var stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::operator()(Vec&&, bool, int, std::ostream*, Args&& ...) const [with ReduceFunction = file206c10244950_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type = void; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/prim/functor/reduce_sum.hpp:207:46:   required from 'auto stan::math::reduce_sum(Vec&&, int, std::ostream*, Args&& ...) [with ReduceFunction = file206c10244950_model_namespace::partial_log_lik_rsfunctor__; Vec = const std::vector<int>&; <template-parameter-1-3> = void; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c403d30c4.hpp:627:52:   required from 'stan::scalar_type_t<T2> file206c10244950_model_namespace::file206c10244950_model::log_prob_impl(VecR&, VecI&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; VecR = Eigen::Matrix<stan::math::var_value<double>, -1, 1>; VecI = Eigen::Matrix<int, -1, 1>; stan::require_vector_like_t<VecR>* <anonymous> = 0; stan::require_vector_like_vt<std::is_integral, VecI>* <anonymous> = 0; stan::scalar_type_t<T2> = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c403d30c4.hpp:1017:77:   required from 'T_ file206c10244950_model_namespace::file206c10244950_model::log_prob(Eigen::Matrix<T_job_param, -1, 1>&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; T_ = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:96:77:   required from 'stan::math::var stan::model::model_base_crtp<M>::log_prob(Eigen::Matrix<stan::math::var_value<double>, -1, 1>&, std::ostream*) const [with M = file206c10244950_model_namespace::file206c10244950_model; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:93:20:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c10244950_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c10244950_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:62:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(size_t num_vars_per_term, size_t num_vars_shared_terms,
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer&, tbb::split) [with ReduceFunction = file206c10244950_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:183:27:   required from 'tbb::task* tbb::interface9::internal::start_reduce<Range, Body, Partitioner>::execute() [with Range = tbb::blocked_range<long long unsigned int>; Body = stan::math::internal::reduce_sum_impl<file206c10244950_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer; Partitioner = const tbb::auto_partitioner]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:178:11:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c10244950_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c10244950_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:77:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(recursive_reducer& other, tbb::split)
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## Start sampling
+\end{verbatim}
+
+\begin{verbatim}
+## Running MCMC with 2 parallel chains, with 2 thread(s) per chain...
+## 
+## Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 1 finished in 0.7 seconds.
+## Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 2 finished in 0.7 seconds.
+## 
+## Both chains finished successfully.
+## Mean chain execution time: 0.7 seconds.
+## Total execution time: 0.9 seconds.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# prior predictive check}
+\FunctionTok{pp\_check}\NormalTok{(iqr\_meta\_spo, }\AttributeTok{nsamples =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# run model now with data}
+\NormalTok{iqr\_meta\_spt }\OtherTok{\textless{}{-}} \FunctionTok{brm}\NormalTok{(}
+  \AttributeTok{formula =}\NormalTok{ iqr\_m0,}
+  \AttributeTok{data =}\NormalTok{ data,}
+  \AttributeTok{family =}\NormalTok{ gaussian,}
+  \AttributeTok{prior =}\NormalTok{ meta\_pri,}
+  \AttributeTok{sample\_prior =}\NormalTok{ T,}
+  \AttributeTok{chains =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{cores =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{backend =} \StringTok{"cmdstanr"}\NormalTok{,}
+  \AttributeTok{threads =} \FunctionTok{threading}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Rows containing NAs were excluded from the model.
+\end{verbatim}
+
+\begin{verbatim}
+## Compiling Stan program...
+\end{verbatim}
+
+\begin{verbatim}
+## In file included from stan/lib/stan_math/stan/math/rev/functor.hpp:28,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math/rev.hpp:11,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/lib/stan_math/stan/math.hpp:19,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from stan/src/stan/model/model_header.hpp:4,
+\end{verbatim}
+
+\begin{verbatim}
+##                  from C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c507042e5.hpp:3:
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(size_t, size_t, double*, VecT&&, ArgsT&& ...) [with VecT = const std::vector<int>&; ArgsT = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; ReduceFunction = file206c4a767a20_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; size_t = long long unsigned int]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:248:23:   required from 'stan::math::var stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::operator()(Vec&&, bool, int, std::ostream*, Args&& ...) const [with ReduceFunction = file206c4a767a20_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type = void; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/prim/functor/reduce_sum.hpp:207:46:   required from 'auto stan::math::reduce_sum(Vec&&, int, std::ostream*, Args&& ...) [with ReduceFunction = file206c4a767a20_model_namespace::partial_log_lik_rsfunctor__; Vec = const std::vector<int>&; <template-parameter-1-3> = void; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c507042e5.hpp:637:52:   required from 'stan::scalar_type_t<T2> file206c4a767a20_model_namespace::file206c4a767a20_model::log_prob_impl(VecR&, VecI&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; VecR = Eigen::Matrix<stan::math::var_value<double>, -1, 1>; VecI = Eigen::Matrix<int, -1, 1>; stan::require_vector_like_t<VecR>* <anonymous> = 0; stan::require_vector_like_vt<std::is_integral, VecI>* <anonymous> = 0; stan::scalar_type_t<T2> = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## C:/Users/ukoto/AppData/Local/Temp/RtmpCcFj0B/model-206c507042e5.hpp:1081:77:   required from 'T_ file206c4a767a20_model_namespace::file206c4a767a20_model::log_prob(Eigen::Matrix<T_job_param, -1, 1>&, std::ostream*) const [with bool propto__ = false; bool jacobian__ = false; T_ = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:96:77:   required from 'stan::math::var stan::model::model_base_crtp<M>::log_prob(Eigen::Matrix<stan::math::var_value<double>, -1, 1>&, std::ostream*) const [with M = file206c4a767a20_model_namespace::file206c4a767a20_model; stan::math::var = stan::math::var_value<double>; std::ostream = std::basic_ostream<char>]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/src/stan/model/model_base_crtp.hpp:93:20:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c4a767a20_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c4a767a20_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:62:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(size_t num_vars_per_term, size_t num_vars_shared_terms,
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp: In instantiation of 'stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer::recursive_reducer(stan::math::internal::reduce_sum_impl<ReduceFunction, typename std::enable_if<stan::is_var<typename std::decay<_Arg>::type, void>::value, void>::type, ReturnType, Vec, Args ...>::recursive_reducer&, tbb::split) [with ReduceFunction = file206c4a767a20_model_namespace::partial_log_lik_rsfunctor__; ReturnType = stan::math::var_value<double>; Vec = const std::vector<int>&; Args = {const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&}]':
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:183:27:   required from 'tbb::task* tbb::interface9::internal::start_reduce<Range, Body, Partitioner>::execute() [with Range = tbb::blocked_range<long long unsigned int>; Body = stan::math::internal::reduce_sum_impl<file206c4a767a20_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer; Partitioner = const tbb::auto_partitioner]'
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/lib/tbb_2019_U8/include/tbb/parallel_reduce.h:178:11:   required from here
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:57:23: warning: 'stan::math::internal::reduce_sum_impl<file206c4a767a20_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::local_args_tuple_scope_' will be initialized after [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      scoped_args_tuple local_args_tuple_scope_;
+\end{verbatim}
+
+\begin{verbatim}
+##                        ^~~~~~~~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:56:25: warning:   'std::tuple<const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&> stan::math::internal::reduce_sum_impl<file206c4a767a20_model_namespace::partial_log_lik_rsfunctor__, void, stan::math::var_value<double>, const std::vector<int>&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, const Eigen::Matrix<double, -1, -1, 0, -1, -1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&, stan::math::var_value<double, void>&, stan::math::var_value<double, void>&, const std::vector<int, std::allocator<int> >&, const Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<stan::math::var_value<double, void>, -1, 1, 0, -1, 1>&>::recursive_reducer::args_tuple_' [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      std::tuple<Args...> args_tuple_;
+\end{verbatim}
+
+\begin{verbatim}
+##                          ^~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## stan/lib/stan_math/stan/math/rev/functor/reduce_sum.hpp:77:5: warning:   when initialized here [-Wreorder]
+\end{verbatim}
+
+\begin{verbatim}
+##      recursive_reducer(recursive_reducer& other, tbb::split)
+\end{verbatim}
+
+\begin{verbatim}
+##      ^~~~~~~~~~~~~~~~~
+\end{verbatim}
+
+\begin{verbatim}
+## Start sampling
+\end{verbatim}
+
+\begin{verbatim}
+## Running MCMC with 2 parallel chains, with 2 thread(s) per chain...
+## 
+## Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
+## Chain 1 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
+## Chain 1 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
+## Chain 1 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 1 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 2 Iteration:  300 / 2000 [ 15%]  (Warmup) 
+## Chain 1 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 2 Iteration:  400 / 2000 [ 20%]  (Warmup) 
+## Chain 2 Iteration:  500 / 2000 [ 25%]  (Warmup) 
+## Chain 1 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 2 Iteration:  600 / 2000 [ 30%]  (Warmup) 
+## Chain 1 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 1 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 2 Iteration:  700 / 2000 [ 35%]  (Warmup) 
+## Chain 2 Iteration:  800 / 2000 [ 40%]  (Warmup) 
+## Chain 1 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 2 Iteration:  900 / 2000 [ 45%]  (Warmup) 
+## Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+## Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+## Chain 1 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 2 Iteration: 1100 / 2000 [ 55%]  (Sampling) 
+## Chain 1 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 2 Iteration: 1200 / 2000 [ 60%]  (Sampling) 
+## Chain 1 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 2 Iteration: 1300 / 2000 [ 65%]  (Sampling) 
+## Chain 1 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 2 Iteration: 1400 / 2000 [ 70%]  (Sampling) 
+## Chain 1 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 2 Iteration: 1500 / 2000 [ 75%]  (Sampling) 
+## Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling) 
+## Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
+## Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
+## Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
+## Chain 1 finished in 2.3 seconds.
+## Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
+## Chain 2 finished in 2.4 seconds.
+## 
+## Both chains finished successfully.
+## Mean chain execution time: 2.4 seconds.
+## Total execution time: 2.6 seconds.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# posterior predictive check}
+\FunctionTok{pp\_check}\NormalTok{(iqr\_meta\_spt, }\AttributeTok{nsamples =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-7-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check effect of diagnosis}
+\FunctionTok{hypothesis}\NormalTok{(iqr\_meta\_spt, }\StringTok{"DiagnosisTD \textless{} 0"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Hypothesis Tests for class b:
+##          Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob
+## 1 (DiagnosisTD) < 0    -0.36      0.07    -0.47    -0.24        Inf         1
+##   Star
+## 1    *
+## ---
+## 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
+## '*': For one-sided hypotheses, the posterior probability exceeds 95%;
+## for two-sided hypotheses, the value tested against lies outside the 95%-CI.
+## Posterior probabilities of point hypotheses assume equal prior probabilities.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{hypothesis}\NormalTok{(iqr\_meta\_spt, }\StringTok{"DiagnosisTD \textless{} 0"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-7-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# summarise model}
+\FunctionTok{summary}\NormalTok{(iqr\_meta\_spt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: Pitch_IQR_stan ~ 1 + Diagnosis + (1 | ID) 
+##    Data: data (Number of observations: 1042) 
+## Samples: 2 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 2000
+## 
+## Group-Level Effects: 
+## ~ID (Number of levels: 140) 
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)     0.63      0.04     0.56     0.70 1.00      864     1264
+## 
+## Population-Level Effects: 
+##             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept       0.32      0.06     0.20     0.44 1.00      866     1187
+## DiagnosisTD    -0.36      0.07    -0.50    -0.22 1.00     1196     1356
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma     0.71      0.02     0.68     0.75 1.00     2555     1084
+## 
+## Samples were drawn using sample(hmc). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot model}
+\FunctionTok{plot}\NormalTok{(iqr\_meta\_spt)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-7-4.pdf}
+
+\#\#\#\#Step 5: Compare the models - Plot priors and posteriors of the
+diagnosis effect in both models - Compare posteriors between the two
+models - Compare the two models (LOO) - Discuss how they compare and
+whether any of them is best.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#magnus}
+\CommentTok{\# plot priors and posteriors for the two models}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{hypothesis}\NormalTok{(iqr\_m0\_spt, }\StringTok{\textquotesingle{}DiagnosisTD \textless{} 0\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{hypothesis}\NormalTok{(iqr\_meta\_spt, }\StringTok{\textquotesingle{}DiagnosisTD \textless{} 0\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-8-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# checking posteriors for the models}
+\FunctionTok{pp\_check}\NormalTok{(iqr\_m0\_spt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Using 10 posterior samples for ppc type 'dens_overlay' by default.
+\end{verbatim}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-8-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pp\_check}\NormalTok{(iqr\_meta\_spt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Using 10 posterior samples for ppc type 'dens_overlay' by default.
+\end{verbatim}
+
+\includegraphics{Assignment3-final_files/figure-latex/unnamed-chunk-8-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#loo comparison}
+\FunctionTok{loo}\NormalTok{(iqr\_m0\_spt, iqr\_meta\_spt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Found 5 observations with a pareto_k > 0.7 in model 'iqr_m0_spt'. It is
+## recommended to set 'moment_match = TRUE' in order to perform moment matching for
+## problematic observations.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Found 7 observations with a pareto_k > 0.7 in model 'iqr_meta_spt'. It
+## is recommended to set 'moment_match = TRUE' in order to perform moment matching
+## for problematic observations.
+\end{verbatim}
+
+\begin{verbatim}
+## Output of model 'iqr_m0_spt':
+## 
+## Computed from 2000 by 1042 log-likelihood matrix
+## 
+##          Estimate   SE
+## elpd_loo  -1182.5 44.7
+## p_loo       103.0  9.7
+## looic      2365.0 89.4
+## ------
+## Monte Carlo SE of elpd_loo is NA.
+## 
+## Pareto k diagnostic values:
+##                          Count Pct.    Min. n_eff
+## (-Inf, 0.5]   (good)     1027  98.6%   220       
+##  (0.5, 0.7]   (ok)         10   1.0%   82        
+##    (0.7, 1]   (bad)         4   0.4%   25        
+##    (1, Inf)   (very bad)    1   0.1%   19        
+## See help('pareto-k-diagnostic') for details.
+## 
+## Output of model 'iqr_meta_spt':
+## 
+## Computed from 2000 by 1042 log-likelihood matrix
+## 
+##          Estimate   SE
+## elpd_loo  -1183.4 45.0
+## p_loo       104.4 10.4
+## looic      2366.9 90.0
+## ------
+## Monte Carlo SE of elpd_loo is NA.
+## 
+## Pareto k diagnostic values:
+##                          Count Pct.    Min. n_eff
+## (-Inf, 0.5]   (good)     1027  98.6%   244       
+##  (0.5, 0.7]   (ok)          8   0.8%   106       
+##    (0.7, 1]   (bad)         6   0.6%   34        
+##    (1, Inf)   (very bad)    1   0.1%   3         
+## See help('pareto-k-diagnostic') for details.
+## 
+## Model comparisons:
+##              elpd_diff se_diff
+## iqr_m0_spt    0.0       0.0   
+## iqr_meta_spt -0.9       1.6
+\end{verbatim}
+
+\#\#\#\#Step 6: Prepare a nice write up of the analysis and answer the
+questions at the top.
+
+Optional step 7: how skeptical should a prior be? - Try different levels
+of skepticism and compare them both plotting the impact on the inferred
+effect size and using LOO.
+
+Optional step 8: Include other predictors - Do age, gender and education
+improve the model? - Should they be main effects or interactions?
+
+Optional step 9: generalized linear models - If you wanted to preserve
+the lognormal distribution of the pitch variability, what would
+
+snscrape --jsonl --progress --max-results 500 --since 2021-03-08
+twitter-search ``\#AuratMarch ban OR hang OR blasphemous
+until:2021-03-12'' \textgreater{} text-query-tweets.json
+
+\end{document}
